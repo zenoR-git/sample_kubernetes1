@@ -1,0 +1,21 @@
+---------------------------------
+
+ruby app used: https://github.com/evans22j/Budget-App/
+
+----------------------------------
+add the following lines to config/database.yml inside the Budget-App folder under the default section
+
+  host: <%= ENV.fetch("PG_HOST") %>
+  username: <%= ENV.fetch("PG_USER")%>
+  password: <%= ENV.fetch("PG_PASSWORD")%>
+
+---------------------------------
+ensure that we are in the Budget-App directory, not in its sub directory or parent directory, and paste this Dockerfile in there. Open a terminal at that 
+location and type the following command
+
+    docker build . -t rubyv2
+
+this will create a image named rubyv2. You can push this image to dockerhub or connect the docker cli in the system to the docker daemon inside minikube to
+create pods and contaiers.
+
+----------------------------------

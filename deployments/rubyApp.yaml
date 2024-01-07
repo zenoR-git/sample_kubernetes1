@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ruby-app
+spec:
+  selector:
+    matchLabels:
+      app: ruby-app
+  template:
+    metadata:
+      labels:
+        app: ruby-app
+    spec:
+      containers:
+      - name: ruby-app
+        image: rubyv2
+        imagePullPolicy: Never
+        resources:
+          limits:
+            memory: "500Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3000
+        env:
+        - name: PG_HOST
+          value: postgres
+        - name: PG_USER
+          value: user
+        - name: PG_PASSWORD
+          value: mysecretpassword

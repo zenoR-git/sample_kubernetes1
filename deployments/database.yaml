@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+spec:
+  serviceName: postgresql-db-service
+  selector:
+    matchLabels:
+      app: postgres
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:latest
+        volumeMounts:
+        - name: postgresql-db-disk
+          mountPath: /data
+        env:
+        - name: POSTGRES_DB
+          value: url_shortener_db
+        - name: POSTGRES_USER
+          value: user
+        - name: POSTGRES_PASSWORD
+          value: mysecretpassword
+        - name: PGDATA
+          value: /data/pgdata
+# Volume Claim
+  volumeClaimTemplates:
+  - metadata:
+      name: postgresql-db-disk
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 2Gi
